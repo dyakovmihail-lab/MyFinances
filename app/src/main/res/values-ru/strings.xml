@@ -1,4 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Мои финансы</string>
+    <string name="balance">Баланс</string>
+    <string name="for_all_time">за всё время</string>
+    <string name="for_month">за месяц</string>
+    <string name="income">Доходы</string>
+    <string name="expense">Расходы</string>
+    <string name="recent_operations">Последние операции</string>
+    <string name="no_operations">Операций пока нет</string>
+
+    <string name="category_salary">Зарплата</string>
+    <string name="category_gift">Подарок</string>
+    <string name="category_other">Другое</string>
+    <string name="category_food">Еда</string>
+    <string name="category_transport">Транспорт</string>
+    <string name="category_entertainment">Развлечения</string>
+    <string name="category_shopping">Покупки</string>
 </resources>

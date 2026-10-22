@@ -1,4 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">My Finances</string>
+    <string name="balance">Balance</string>
+    <string name="for_all_time">for all time</string>
+    <string name="for_month">for the month</string>
+    <string name="income">Income</string>
+    <string name="expense">Expenses</string>
+    <string name="recent_operations">Recent operations</string>
+    <string name="no_operations">No operations yet</string>
+
+    <string name="category_salary">Salary</string>
+    <string name="category_gift">Gift</string>
+    <string name="category_other">Other</string>
+    <string name="category_food">Food</string>
+    <string name="category_transport">Transport</string>
+    <string name="category_entertainment">Entertainment</string>
+    <string name="category_shopping">Shopping</string>
 </resources>
