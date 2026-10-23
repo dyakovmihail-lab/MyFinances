@@ -16,4 +16,21 @@
     <string name="category_transport">Transport</string>
     <string name="category_entertainment">Entertainment</string>
     <string name="category_shopping">Shopping</string>
+
+    <string name="add_operation">Add operation</string>
+    <string name="add_title">Add operation</string>
+    <string name="edit_title">Edit</string>
+    <string name="back">Back</string>
+    <string name="expense_type">Expense</string>
+    <string name="income_type">Income</string>
+    <string name="amount">Amount</string>
+    <string name="category">Category</string>
+    <string name="date">Date</string>
+    <string name="comment">Comment</string>
+    <string name="save">Save</string>
+    <string name="save_changes">Save changes</string>
+    <string name="cancel">Cancel</string>
+    <string name="error_amount">Enter an amount greater than zero</string>
+    <string name="choose_income_category">Income category</string>
+    <string name="choose_expense_category">Expense category</string>
 </resources>
