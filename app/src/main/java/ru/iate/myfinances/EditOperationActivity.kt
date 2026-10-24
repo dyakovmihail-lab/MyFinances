@@ -44,6 +44,7 @@ import ru.iate.myfinances.data.Category
 import ru.iate.myfinances.data.Operation
 import ru.iate.myfinances.data.TransactionType
 import ru.iate.myfinances.ui.components.ChoiceDialog
+import ru.iate.myfinances.ui.components.ToggleButton
 import ru.iate.myfinances.ui.theme.MyFinancesTheme
 import ru.iate.myfinances.util.CURRENCY
 import ru.iate.myfinances.util.EXTRA_OPERATION_ID
@@ -184,13 +185,13 @@ private fun EditOperationScreen(
                 )
             } else {
                 Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                    TypeButton(
+                    ToggleButton(
                         text = stringResource(R.string.expense_type),
                         selected = type == TransactionType.EXPENSE,
                         onClick = { changeType(TransactionType.EXPENSE) },
                         modifier = Modifier.weight(1f)
                     )
-                    TypeButton(
+                    ToggleButton(
                         text = stringResource(R.string.income_type),
                         selected = type == TransactionType.INCOME,
                         onClick = { changeType(TransactionType.INCOME) },
@@ -270,19 +271,5 @@ private fun EditOperationScreen(
             },
             onDismiss = { showCategoryDialog = false }
         )
-    }
-}
-
-@Composable
-private fun TypeButton(
-    text: String,
-    selected: Boolean,
-    onClick: () -> Unit,
-    modifier: Modifier = Modifier
-) {
-    if (selected) {
-        Button(onClick = onClick, modifier = modifier) { Text(text = text) }
-    } else {
-        OutlinedButton(onClick = onClick, modifier = modifier) { Text(text = text) }
     }
 }

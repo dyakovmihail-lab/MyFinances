@@ -33,4 +33,30 @@
     <string name="error_amount">Введите сумму больше нуля</string>
     <string name="choose_income_category">Категория дохода</string>
     <string name="choose_expense_category">Категория расхода</string>
+
+    <string name="tab_home">Главная</string>
+    <string name="tab_operations">Операции</string>
+    <string name="today">Сегодня</string>
+    <string name="yesterday">Вчера</string>
+    <string name="filter_all">Все</string>
+    <string name="filter_incomes">Доходы</string>
+    <string name="filter_expenses">Расходы</string>
+    <string name="all_categories">Все категории</string>
+    <string name="period">Период</string>
+    <string name="nothing_found">Ничего не найдено</string>
+    <string name="type_income_lower">доход</string>
+    <string name="type_expense_lower">расход</string>
+    <string name="category_with_type">%1$s (%2$s)</string>
+    <string name="choose_category">Категория</string>
+    <string name="choose_period">Период</string>
+    <string name="period_all">За всё время</string>
+    <string name="period_today">Сегодня</string>
+    <string name="period_week">Эта неделя</string>
+    <string name="period_month">Этот месяц</string>
+    <string name="custom_period">Произвольный период</string>
+    <string name="period_from">Начало</string>
+    <string name="period_to">Конец</string>
+    <string name="period_range">%1$s – %2$s</string>
+    <string name="error_period">Дата начала не может быть позже даты окончания</string>
+    <string name="apply">Применить</string>
 </resources>

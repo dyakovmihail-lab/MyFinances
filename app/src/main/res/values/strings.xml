@@ -33,4 +33,30 @@
     <string name="error_amount">Enter an amount greater than zero</string>
     <string name="choose_income_category">Income category</string>
     <string name="choose_expense_category">Expense category</string>
+
+    <string name="tab_home">Home</string>
+    <string name="tab_operations">Operations</string>
+    <string name="today">Today</string>
+    <string name="yesterday">Yesterday</string>
+    <string name="filter_all">All</string>
+    <string name="filter_incomes">Income</string>
+    <string name="filter_expenses">Expenses</string>
+    <string name="all_categories">All categories</string>
+    <string name="period">Period</string>
+    <string name="nothing_found">Nothing found</string>
+    <string name="type_income_lower">income</string>
+    <string name="type_expense_lower">expense</string>
+    <string name="category_with_type">%1$s (%2$s)</string>
+    <string name="choose_category">Category</string>
+    <string name="choose_period">Period</string>
+    <string name="period_all">All time</string>
+    <string name="period_today">Today</string>
+    <string name="period_week">This week</string>
+    <string name="period_month">This month</string>
+    <string name="custom_period">Custom period</string>
+    <string name="period_from">From</string>
+    <string name="period_to">To</string>
+    <string name="period_range">%1$s – %2$s</string>
+    <string name="error_period">The start date must not be later than the end date</string>
+    <string name="apply">Apply</string>
 </resources>

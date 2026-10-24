@@ -5,12 +5,10 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.systemBarsPadding
@@ -29,12 +27,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import ru.iate.myfinances.ui.components.AppHeader
+import ru.iate.myfinances.ui.components.MainTab
+import ru.iate.myfinances.ui.components.OperationItem
 import ru.iate.myfinances.ui.theme.MyFinancesTheme
-import ru.iate.myfinances.util.formatDate
 import ru.iate.myfinances.util.formatMoney
-import ru.iate.myfinances.util.formatSignedMoney
 import ru.iate.myfinances.util.openAddOperation
 import ru.iate.myfinances.util.openEditOperation
+import ru.iate.myfinances.util.openOperations
 import ru.iate.myfinances.viewmodel.MainViewModel
 
 class MainActivity : ComponentActivity() {
@@ -48,6 +48,7 @@ class MainActivity : ComponentActivity() {
             MyFinancesTheme {
                 MainScreen(
                     viewModel = viewModel,
+                    onOperationsClick = { openOperations(this) },
                     onAddClick = { openAddOperation(this) },
                     onOperationClick = { id -> openEditOperation(this, id) }
                 )
@@ -59,6 +60,7 @@ class MainActivity : ComponentActivity() {
 @Composable
 private fun MainScreen(
     viewModel: MainViewModel,
+    onOperationsClick: () -> Unit,
     onAddClick: () -> Unit,
     onOperationClick: (Long) -> Unit
 ) {
@@ -69,57 +71,55 @@ private fun MainScreen(
             .fillMaxSize()
             .systemBarsPadding()
     ) {
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .verticalScroll(rememberScrollState())
-                .padding(start = 16.dp, end = 16.dp, top = 16.dp, bottom = 88.dp)
-        ) {
-            Text(
-                text = stringResource(R.string.app_name),
-                style = MaterialTheme.typography.headlineLarge
+        Column(modifier = Modifier.fillMaxSize()) {
+            AppHeader(
+                selected = MainTab.HOME,
+                onHomeClick = {},
+                onOperationsClick = onOperationsClick
             )
-            Spacer(modifier = Modifier.height(16.dp))
 
-            Text(
-                text = stringResource(R.string.balance),
-                style = MaterialTheme.typography.titleMedium
-            )
-            Text(
-                text = formatMoney(state.balance),
-                style = MaterialTheme.typography.headlineMedium
-            )
-            Text(text = stringResource(R.string.for_all_time))
-            Spacer(modifier = Modifier.height(16.dp))
+            Column(
+                modifier = Modifier
+                    .weight(1f)
+                    .verticalScroll(rememberScrollState())
+                    .padding(start = 16.dp, end = 16.dp, top = 8.dp, bottom = 88.dp)
+            ) {
+                Text(
+                    text = stringResource(R.string.balance),
+                    style = MaterialTheme.typography.titleMedium
+                )
+                Text(
+                    text = formatMoney(state.balance),
+                    style = MaterialTheme.typography.headlineMedium
+                )
+                Text(text = stringResource(R.string.for_all_time))
+                Spacer(modifier = Modifier.height(16.dp))
 
-            Text(
-                text = "${stringResource(R.string.income)}: ${formatMoney(state.monthIncome)} " +
-                    stringResource(R.string.for_month)
-            )
-            Text(
-                text = "${stringResource(R.string.expense)}: ${formatMoney(state.monthExpense)} " +
-                    stringResource(R.string.for_month)
-            )
-            Spacer(modifier = Modifier.height(24.dp))
+                Text(
+                    text = "${stringResource(R.string.income)}: ${formatMoney(state.monthIncome)} " +
+                        stringResource(R.string.for_month)
+                )
+                Text(
+                    text = "${stringResource(R.string.expense)}: ${formatMoney(state.monthExpense)} " +
+                        stringResource(R.string.for_month)
+                )
+                Spacer(modifier = Modifier.height(24.dp))
 
-            Text(
-                text = stringResource(R.string.recent_operations),
-                style = MaterialTheme.typography.titleMedium
-            )
-            Spacer(modifier = Modifier.height(8.dp))
+                Text(
+                    text = stringResource(R.string.recent_operations),
+                    style = MaterialTheme.typography.titleMedium
+                )
+                Spacer(modifier = Modifier.height(8.dp))
 
-            if (state.recent.isEmpty()) {
-                Text(text = stringResource(R.string.no_operations))
-            } else {
-                state.recent.forEach { operation ->
-                    Text(
-                        text = "${stringResource(operation.category.titleRes)}  " +
-                            "${formatSignedMoney(operation)}  ${formatDate(operation.date)}",
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .clickable { onOperationClick(operation.id) }
-                            .padding(vertical = 8.dp)
-                    )
+                if (state.recent.isEmpty()) {
+                    Text(text = stringResource(R.string.no_operations))
+                } else {
+                    state.recent.forEach { operation ->
+                        OperationItem(
+                            operation = operation,
+                            onClick = { onOperationClick(operation.id) }
+                        )
+                    }
                 }
             }
         }
