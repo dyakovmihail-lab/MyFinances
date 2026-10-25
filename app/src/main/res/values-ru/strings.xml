@@ -59,4 +59,10 @@
     <string name="period_range">%1$s – %2$s</string>
     <string name="error_period">Дата начала не может быть позже даты окончания</string>
     <string name="apply">Применить</string>
+
+    <string name="details_title">Детали операции</string>
+    <string name="edit">Редактировать</string>
+    <string name="delete">Удалить</string>
+    <string name="delete_title">Удалить операцию?</string>
+    <string name="delete_message">Это действие нельзя отменить.</string>
 </resources>

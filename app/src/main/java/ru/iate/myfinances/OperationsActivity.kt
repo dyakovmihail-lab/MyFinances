@@ -37,7 +37,7 @@ import ru.iate.myfinances.ui.components.OperationItem
 import ru.iate.myfinances.ui.components.ToggleButton
 import ru.iate.myfinances.ui.theme.MyFinancesTheme
 import ru.iate.myfinances.util.formatDate
-import ru.iate.myfinances.util.openEditOperation
+import ru.iate.myfinances.util.openOperationDetails
 import ru.iate.myfinances.viewmodel.OperationFilter
 import ru.iate.myfinances.viewmodel.OperationsViewModel
 import ru.iate.myfinances.viewmodel.Period
@@ -54,7 +54,7 @@ class OperationsActivity : ComponentActivity() {
                 OperationsScreen(
                     viewModel = viewModel,
                     onHomeClick = { finish() },
-                    onOperationClick = { id -> openEditOperation(this, id) }
+                    onOperationClick = { id -> openOperationDetails(this, id) }
                 )
             }
         }

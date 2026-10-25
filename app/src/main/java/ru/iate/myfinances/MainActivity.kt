@@ -33,7 +33,7 @@ import ru.iate.myfinances.ui.components.OperationItem
 import ru.iate.myfinances.ui.theme.MyFinancesTheme
 import ru.iate.myfinances.util.formatMoney
 import ru.iate.myfinances.util.openAddOperation
-import ru.iate.myfinances.util.openEditOperation
+import ru.iate.myfinances.util.openOperationDetails
 import ru.iate.myfinances.util.openOperations
 import ru.iate.myfinances.viewmodel.MainViewModel
 
@@ -50,7 +50,7 @@ class MainActivity : ComponentActivity() {
                     viewModel = viewModel,
                     onOperationsClick = { openOperations(this) },
                     onAddClick = { openAddOperation(this) },
-                    onOperationClick = { id -> openEditOperation(this, id) }
+                    onOperationClick = { id -> openOperationDetails(this, id) }
                 )
             }
         }

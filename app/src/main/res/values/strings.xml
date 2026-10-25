@@ -59,4 +59,10 @@
     <string name="period_range">%1$s – %2$s</string>
     <string name="error_period">The start date must not be later than the end date</string>
     <string name="apply">Apply</string>
+
+    <string name="details_title">Operation details</string>
+    <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
+    <string name="delete_title">Delete operation?</string>
+    <string name="delete_message">This action cannot be undone.</string>
 </resources>
