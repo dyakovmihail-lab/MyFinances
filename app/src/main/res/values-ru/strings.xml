@@ -1,4 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Мои финансы</string>
+    <string name="balance">Баланс</string>
+    <string name="for_all_time">за всё время</string>
+    <string name="for_month">за месяц</string>
+    <string name="income">Доходы</string>
+    <string name="expense">Расходы</string>
+    <string name="recent_operations">Последние операции</string>
+    <string name="no_operations">Операций пока нет</string>
+
+    <string name="category_salary">Зарплата</string>
+    <string name="category_gift">Подарок</string>
+    <string name="category_other">Другое</string>
+    <string name="category_food">Еда</string>
+    <string name="category_transport">Транспорт</string>
+    <string name="category_entertainment">Развлечения</string>
+    <string name="category_shopping">Покупки</string>
+
+    <string name="add_operation">Добавить операцию</string>
+    <string name="add_title">Добавить операцию</string>
+    <string name="edit_title">Редактировать</string>
+    <string name="back">Назад</string>
+    <string name="expense_type">Расход</string>
+    <string name="income_type">Доход</string>
+    <string name="amount">Сумма</string>
+    <string name="category">Категория</string>
+    <string name="date">Дата</string>
+    <string name="comment">Комментарий</string>
+    <string name="save">Сохранить</string>
+    <string name="save_changes">Сохранить изменения</string>
+    <string name="cancel">Отмена</string>
+    <string name="error_amount">Введите сумму больше нуля</string>
+    <string name="choose_income_category">Категория дохода</string>
+    <string name="choose_expense_category">Категория расхода</string>
+
+    <string name="tab_home">Главная</string>
+    <string name="tab_operations">Операции</string>
+    <string name="today">Сегодня</string>
+    <string name="yesterday">Вчера</string>
+    <string name="filter_all">Все</string>
+    <string name="filter_incomes">Доходы</string>
+    <string name="filter_expenses">Расходы</string>
+    <string name="all_categories">Все категории</string>
+    <string name="period">Период</string>
+    <string name="nothing_found">Ничего не найдено</string>
+    <string name="type_income_lower">доход</string>
+    <string name="type_expense_lower">расход</string>
+    <string name="category_with_type">%1$s (%2$s)</string>
+    <string name="choose_category">Категория</string>
+    <string name="choose_period">Период</string>
+    <string name="period_all">За всё время</string>
+    <string name="period_today">Сегодня</string>
+    <string name="period_week">Эта неделя</string>
+    <string name="period_month">Этот месяц</string>
+    <string name="custom_period">Произвольный период</string>
+    <string name="period_from">Начало</string>
+    <string name="period_to">Конец</string>
+    <string name="period_range">%1$s – %2$s</string>
+    <string name="error_period">Дата начала не может быть позже даты окончания</string>
+    <string name="apply">Применить</string>
+
+    <string name="details_title">Детали операции</string>
+    <string name="edit">Редактировать</string>
+    <string name="delete">Удалить</string>
+    <string name="delete_title">Удалить операцию?</string>
+    <string name="delete_message">Это действие нельзя отменить.</string>
 </resources>
