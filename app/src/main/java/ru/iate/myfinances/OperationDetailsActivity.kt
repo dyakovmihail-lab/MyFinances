@@ -5,6 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -18,7 +19,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -37,7 +37,10 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import ru.iate.myfinances.data.Operation
 import ru.iate.myfinances.data.TransactionType
+import ru.iate.myfinances.ui.components.AppCard
+import ru.iate.myfinances.ui.components.AppDivider
 import ru.iate.myfinances.ui.components.DeleteConfirmDialog
+import ru.iate.myfinances.ui.components.FieldShape
 import ru.iate.myfinances.ui.theme.MyFinancesTheme
 import ru.iate.myfinances.util.EXTRA_OPERATION_ID
 import ru.iate.myfinances.util.NEW_OPERATION_ID
@@ -83,10 +86,11 @@ private fun OperationDetailsScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
+            .background(MaterialTheme.colorScheme.background)
             .systemBarsPadding()
     ) {
         Row(
-            modifier = Modifier.padding(horizontal = 8.dp, vertical = 8.dp),
+            modifier = Modifier.padding(start = 8.dp, end = 20.dp, top = 12.dp, bottom = 8.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
             IconButton(onClick = onBack) {
@@ -97,40 +101,55 @@ private fun OperationDetailsScreen(
             }
             Text(
                 text = stringResource(R.string.details_title),
-                style = MaterialTheme.typography.headlineMedium
+                style = MaterialTheme.typography.headlineMedium,
+                color = MaterialTheme.colorScheme.onBackground
             )
         }
 
         operation?.let { current ->
-            Column(modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)) {
+            Column(modifier = Modifier.padding(horizontal = 20.dp, vertical = 8.dp)) {
                 Text(
                     text = stringResource(
                         if (current.type == TransactionType.INCOME) R.string.income_type
                         else R.string.expense_type
                     ),
-                    style = MaterialTheme.typography.titleMedium
+                    style = MaterialTheme.typography.titleMedium,
+                    color = MaterialTheme.colorScheme.onBackground
                 )
-                Spacer(modifier = Modifier.height(8.dp))
+                Spacer(modifier = Modifier.height(12.dp))
 
-                DetailsTable(operation = current)
+                DetailsCard(operation = current)
 
                 Spacer(modifier = Modifier.height(24.dp))
                 Button(
                     onClick = onEdit,
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(56.dp),
+                    shape = FieldShape
                 ) {
-                    Text(text = stringResource(R.string.edit))
+                    Text(
+                        text = stringResource(R.string.edit),
+                        style = MaterialTheme.typography.labelLarge
+                    )
                 }
 
-                Spacer(modifier = Modifier.height(8.dp))
+                Spacer(modifier = Modifier.height(12.dp))
                 OutlinedButton(
                     onClick = { showDeleteDialog = true },
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(56.dp),
+                    shape = FieldShape,
                     colors = ButtonDefaults.outlinedButtonColors(
+                        containerColor = MaterialTheme.colorScheme.surface,
                         contentColor = MaterialTheme.colorScheme.error
                     )
                 ) {
-                    Text(text = stringResource(R.string.delete))
+                    Text(
+                        text = stringResource(R.string.delete),
+                        style = MaterialTheme.typography.labelLarge
+                    )
                 }
             }
 
@@ -148,27 +167,29 @@ private fun OperationDetailsScreen(
 }
 
 @Composable
-private fun DetailsTable(operation: Operation) {
-    Column {
-        DetailsRow(
-            label = stringResource(R.string.category),
-            value = stringResource(operation.category.titleRes)
-        )
-        HorizontalDivider()
-        DetailsRow(
-            label = stringResource(R.string.amount),
-            value = formatSignedMoney(operation)
-        )
-        HorizontalDivider()
-        DetailsRow(
-            label = stringResource(R.string.date),
-            value = formatDate(operation.date)
-        )
-        HorizontalDivider()
-        DetailsRow(
-            label = stringResource(R.string.comment),
-            value = operation.comment.ifBlank { "—" }
-        )
+private fun DetailsCard(operation: Operation) {
+    AppCard(modifier = Modifier.fillMaxWidth()) {
+        Column {
+            DetailsRow(
+                label = stringResource(R.string.category),
+                value = stringResource(operation.category.titleRes)
+            )
+            AppDivider(modifier = Modifier.padding(horizontal = 16.dp))
+            DetailsRow(
+                label = stringResource(R.string.amount),
+                value = formatSignedMoney(operation)
+            )
+            AppDivider(modifier = Modifier.padding(horizontal = 16.dp))
+            DetailsRow(
+                label = stringResource(R.string.date),
+                value = formatDate(operation.date)
+            )
+            AppDivider(modifier = Modifier.padding(horizontal = 16.dp))
+            DetailsRow(
+                label = stringResource(R.string.comment),
+                value = operation.comment.ifBlank { "—" }
+            )
+        }
     }
 }
 
@@ -177,14 +198,19 @@ private fun DetailsRow(label: String, value: String) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(vertical = 12.dp),
+            .padding(horizontal = 16.dp, vertical = 16.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Text(text = label, style = MaterialTheme.typography.bodyMedium)
+        Text(
+            text = label,
+            style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.onSurfaceVariant
+        )
         Spacer(modifier = Modifier.width(16.dp))
         Text(
             text = value,
-            style = MaterialTheme.typography.titleMedium,
+            style = MaterialTheme.typography.labelLarge,
+            color = MaterialTheme.colorScheme.onSurface,
             textAlign = TextAlign.End,
             modifier = Modifier.weight(1f)
         )

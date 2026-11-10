@@ -10,9 +10,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -87,19 +88,19 @@ fun CustomPeriodDialog(
         title = { Text(text = stringResource(R.string.custom_period)) },
         text = {
             Column {
-                OutlinedButton(
-                    onClick = { showDatePicker(context, from) { from = it } },
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    Text(text = "${stringResource(R.string.period_from)}: ${formatDate(from)}")
-                }
-                Spacer(modifier = Modifier.height(8.dp))
-                OutlinedButton(
-                    onClick = { showDatePicker(context, to) { to = it } },
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    Text(text = "${stringResource(R.string.period_to)}: ${formatDate(to)}")
-                }
+                FieldLabel(text = stringResource(R.string.period_from))
+                SelectField(
+                    text = formatDate(from),
+                    icon = Icons.Filled.DateRange,
+                    onClick = { showDatePicker(context, from) { from = it } }
+                )
+                Spacer(modifier = Modifier.height(12.dp))
+                FieldLabel(text = stringResource(R.string.period_to))
+                SelectField(
+                    text = formatDate(to),
+                    icon = Icons.Filled.DateRange,
+                    onClick = { showDatePicker(context, to) { to = it } }
+                )
                 if (!isValid) {
                     Spacer(modifier = Modifier.height(8.dp))
                     Text(
