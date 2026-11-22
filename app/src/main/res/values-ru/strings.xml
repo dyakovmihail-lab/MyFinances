@@ -7,7 +7,7 @@
     <string name="income">Доходы</string>
     <string name="expense">Расходы</string>
     <string name="recent_operations">Последние операции</string>
-    <string name="no_operations">Операций пока нет</string>
+    <string name="no_operations">Операций пока нет. Нажмите +, чтобы добавить первую.</string>
 
     <string name="category_salary">Зарплата</string>
     <string name="category_gift">Подарок</string>

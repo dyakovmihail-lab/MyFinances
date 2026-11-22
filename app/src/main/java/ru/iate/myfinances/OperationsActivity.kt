@@ -5,18 +5,19 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -32,8 +33,10 @@ import ru.iate.myfinances.data.TransactionType
 import ru.iate.myfinances.ui.components.AppHeader
 import ru.iate.myfinances.ui.components.ChoiceDialog
 import ru.iate.myfinances.ui.components.CustomPeriodDialog
+import ru.iate.myfinances.ui.components.FieldLabel
 import ru.iate.myfinances.ui.components.MainTab
 import ru.iate.myfinances.ui.components.OperationItem
+import ru.iate.myfinances.ui.components.SelectField
 import ru.iate.myfinances.ui.components.ToggleButton
 import ru.iate.myfinances.ui.theme.MyFinancesTheme
 import ru.iate.myfinances.util.formatDate
@@ -77,6 +80,7 @@ private fun OperationsScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
+            .background(MaterialTheme.colorScheme.background)
             .systemBarsPadding()
     ) {
         AppHeader(
@@ -87,18 +91,23 @@ private fun OperationsScreen(
 
         LazyColumn(
             modifier = Modifier.weight(1f),
-            contentPadding = PaddingValues(16.dp),
+            contentPadding = PaddingValues(start = 20.dp, end = 20.dp, top = 20.dp, bottom = 20.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             item {
                 Text(
                     text = stringResource(R.string.tab_operations),
-                    style = MaterialTheme.typography.headlineMedium
+                    style = MaterialTheme.typography.headlineMedium,
+                    color = MaterialTheme.colorScheme.onBackground,
+                    modifier = Modifier.padding(bottom = 4.dp)
                 )
             }
 
             item {
-                Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                Row(
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                    modifier = Modifier.padding(bottom = 8.dp)
+                ) {
                     ToggleButton(
                         text = stringResource(R.string.filter_all),
                         selected = filter.type == null,
@@ -118,29 +127,33 @@ private fun OperationsScreen(
             }
 
             item {
-                OutlinedButton(
-                    onClick = { showCategoryDialog = true },
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    val categoryText = filter.category?.let { categoryFilterLabel(it, filter.type == null) }
-                        ?: stringResource(R.string.all_categories)
-                    Text(text = "${stringResource(R.string.category)}: $categoryText")
-                }
+                FieldLabel(text = stringResource(R.string.category))
+                SelectField(
+                    text = filter.category?.let { categoryFilterLabel(it, filter.type == null) }
+                        ?: stringResource(R.string.all_categories),
+                    icon = Icons.Filled.KeyboardArrowDown,
+                    onClick = { showCategoryDialog = true }
+                )
             }
 
             item {
-                OutlinedButton(
-                    onClick = { showPeriodDialog = true },
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    Text(text = "${stringResource(R.string.period)}: ${periodFieldText(filter)}")
-                }
+                FieldLabel(
+                    text = stringResource(R.string.period),
+                    modifier = Modifier.padding(top = 8.dp)
+                )
+                SelectField(
+                    text = periodFieldText(filter),
+                    icon = Icons.Filled.KeyboardArrowDown,
+                    onClick = { showPeriodDialog = true }
+                )
             }
 
             if (operations.isEmpty()) {
                 item {
                     Text(
                         text = stringResource(R.string.nothing_found),
+                        style = MaterialTheme.typography.bodyLarge,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
                         modifier = Modifier.padding(top = 16.dp)
                     )
                 }

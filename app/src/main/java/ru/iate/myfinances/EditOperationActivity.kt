@@ -5,6 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -20,11 +21,12 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.DateRange
+import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -44,7 +46,11 @@ import ru.iate.myfinances.data.Category
 import ru.iate.myfinances.data.Operation
 import ru.iate.myfinances.data.TransactionType
 import ru.iate.myfinances.ui.components.ChoiceDialog
+import ru.iate.myfinances.ui.components.FieldLabel
+import ru.iate.myfinances.ui.components.FieldShape
+import ru.iate.myfinances.ui.components.SelectField
 import ru.iate.myfinances.ui.components.ToggleButton
+import ru.iate.myfinances.ui.components.appTextFieldColors
 import ru.iate.myfinances.ui.theme.MyFinancesTheme
 import ru.iate.myfinances.util.CURRENCY
 import ru.iate.myfinances.util.EXTRA_OPERATION_ID
@@ -150,11 +156,12 @@ private fun EditOperationScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
+            .background(MaterialTheme.colorScheme.background)
             .systemBarsPadding()
             .imePadding()
     ) {
         Row(
-            modifier = Modifier.padding(horizontal = 8.dp, vertical = 8.dp),
+            modifier = Modifier.padding(start = 8.dp, end = 20.dp, top = 12.dp, bottom = 8.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
             IconButton(onClick = onBack) {
@@ -165,7 +172,8 @@ private fun EditOperationScreen(
             }
             Text(
                 text = stringResource(if (isEdit) R.string.edit_title else R.string.add_title),
-                style = MaterialTheme.typography.headlineMedium
+                style = MaterialTheme.typography.headlineMedium,
+                color = MaterialTheme.colorScheme.onBackground
             )
         }
 
@@ -173,34 +181,25 @@ private fun EditOperationScreen(
             modifier = Modifier
                 .weight(1f)
                 .verticalScroll(rememberScrollState())
-                .padding(horizontal = 16.dp, vertical = 8.dp)
+                .padding(horizontal = 20.dp, vertical = 8.dp)
         ) {
-            if (isEdit) {
-                Text(
-                    text = stringResource(
-                        if (type == TransactionType.INCOME) R.string.income_type
-                        else R.string.expense_type
-                    ),
-                    style = MaterialTheme.typography.titleMedium
+            Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                ToggleButton(
+                    text = stringResource(R.string.expense_type),
+                    selected = type == TransactionType.EXPENSE,
+                    onClick = if (isEdit) null else ({ changeType(TransactionType.EXPENSE) }),
+                    modifier = Modifier.weight(1f)
                 )
-            } else {
-                Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                    ToggleButton(
-                        text = stringResource(R.string.expense_type),
-                        selected = type == TransactionType.EXPENSE,
-                        onClick = { changeType(TransactionType.EXPENSE) },
-                        modifier = Modifier.weight(1f)
-                    )
-                    ToggleButton(
-                        text = stringResource(R.string.income_type),
-                        selected = type == TransactionType.INCOME,
-                        onClick = { changeType(TransactionType.INCOME) },
-                        modifier = Modifier.weight(1f)
-                    )
-                }
+                ToggleButton(
+                    text = stringResource(R.string.income_type),
+                    selected = type == TransactionType.INCOME,
+                    onClick = if (isEdit) null else ({ changeType(TransactionType.INCOME) }),
+                    modifier = Modifier.weight(1f)
+                )
             }
 
             Spacer(modifier = Modifier.height(16.dp))
+            FieldLabel(text = stringResource(R.string.amount))
             OutlinedTextField(
                 value = amountText,
                 onValueChange = { input ->
@@ -210,50 +209,61 @@ private fun EditOperationScreen(
                     }
                 },
                 modifier = Modifier.fillMaxWidth(),
-                label = { Text(text = stringResource(R.string.amount)) },
+                shape = FieldShape,
                 singleLine = true,
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
+                placeholder = { Text(text = "0") },
                 trailingIcon = { Text(text = CURRENCY) },
                 isError = showAmountError,
                 supportingText = if (showAmountError) {
                     { Text(text = stringResource(R.string.error_amount)) }
                 } else {
                     null
-                }
+                },
+                colors = appTextFieldColors()
             )
 
             Spacer(modifier = Modifier.height(16.dp))
-            OutlinedButton(
-                onClick = { showCategoryDialog = true },
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                Text(text = "${stringResource(R.string.category)}: ${stringResource(category.titleRes)}")
-            }
-
-            Spacer(modifier = Modifier.height(8.dp))
-            OutlinedButton(
-                onClick = { showDatePicker(context, date) { epochDay = it.toEpochDay() } },
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                Text(text = "${stringResource(R.string.date)}: ${formatDate(date)}")
-            }
+            FieldLabel(text = stringResource(R.string.category))
+            SelectField(
+                text = stringResource(category.titleRes),
+                icon = Icons.Filled.KeyboardArrowDown,
+                onClick = { showCategoryDialog = true }
+            )
 
             Spacer(modifier = Modifier.height(16.dp))
+            FieldLabel(text = stringResource(R.string.date))
+            SelectField(
+                text = formatDate(date),
+                icon = Icons.Filled.DateRange,
+                onClick = { showDatePicker(context, date) { epochDay = it.toEpochDay() } }
+            )
+
+            Spacer(modifier = Modifier.height(16.dp))
+            FieldLabel(text = stringResource(R.string.comment))
             OutlinedTextField(
                 value = comment,
                 onValueChange = { comment = it },
                 modifier = Modifier.fillMaxWidth(),
-                label = { Text(text = stringResource(R.string.comment)) },
-                maxLines = 3
+                shape = FieldShape,
+                maxLines = 3,
+                colors = appTextFieldColors()
             )
 
-            Spacer(modifier = Modifier.height(24.dp))
+            Spacer(modifier = Modifier.height(32.dp))
             Button(
                 onClick = { save() },
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(56.dp),
+                shape = FieldShape
             ) {
-                Text(text = stringResource(if (isEdit) R.string.save_changes else R.string.save))
+                Text(
+                    text = stringResource(if (isEdit) R.string.save_changes else R.string.save),
+                    style = MaterialTheme.typography.labelLarge
+                )
             }
+            Spacer(modifier = Modifier.height(16.dp))
         }
     }
 
